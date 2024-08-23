@@ -35,6 +35,7 @@ function Login() {
             
         } catch (error) {
             console.log(error)
+            toast.error("Invalid email or password")
             setLoading(loading)
         }
 
@@ -73,7 +74,7 @@ function Login() {
                     </button>
                 </div>
                 <div>
-                    <h2 className='text-white'>Don't have an account <Link className=' text-yellow-500 font-bold' to={'/signup'}>Signup</Link></h2>
+                    <h2 className='text-white'>Don&apos;t have an account <Link className=' text-yellow-500 font-bold' to={'/signup'}>Signup</Link></h2>
                 </div>
             </div>
         </div>

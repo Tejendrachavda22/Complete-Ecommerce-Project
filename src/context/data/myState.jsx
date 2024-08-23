@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import MyContext from './myContext'
 import { Timestamp, addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { fireDB } from '../../fireabase/FirebaseConfig';
+import { Navigate } from 'react-router-dom';
+
 
 function myState(props) {
     const [mode, setMode] = useState('light');
@@ -185,13 +187,19 @@ function myState(props) {
     const [filterType, setFilterType] = useState('')
     const [filterPrice, setFilterPrice] = useState('')
 
+    const resetFilter = () => {
+        setSearchkey('')
+        setFilterType('')
+        setFilterPrice('')
+    }
+
     return (
         <MyContext.Provider value={{
             mode, toggleMode, loading, setLoading,
             products, setProducts, addProduct, product,
             edithandle, updateProduct, deleteProduct, order,
-            user, searchkey, setSearchkey,filterType,setFilterType,
-            filterPrice,setFilterPrice
+            user, searchkey, setSearchkey, filterType, setFilterType,
+            filterPrice, setFilterPrice , resetFilter
         }}>
             {props.children}
         </MyContext.Provider>

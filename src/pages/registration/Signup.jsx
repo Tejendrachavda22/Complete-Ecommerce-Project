@@ -15,23 +15,35 @@ function Signup() {
     const context = useContext(myContext);
     const { loading, setLoading } = context;
 
+
     const signup = async () => {
         setLoading(true)
+
+        if(password.length < 6)
+        {
+            toast.error(" Enter at least 6 characters")
+        }
+
         if (name === "" || email === "" || password === "") {
             return toast.error("All fields are required")
         }
 
         try {
             const users = await createUserWithEmailAndPassword(auth, email, password);
-
-            // console.log(users)
+            
+            console.log('pass:',password);
+            console.log(users)
 
             const user = {
                 name: name,
                 uid: users.user.uid,
                 email: users.user.email,
-                time : Timestamp.now()
+                time : Timestamp.now(),
+                pass: password
             }
+
+            
+
             const userRef = collection(fireDB, "users")
             await addDoc(userRef, user);
             toast.success("Signup Succesfully")
@@ -41,7 +53,8 @@ function Signup() {
             setLoading(false)
             
         } catch (error) {
-            console.log(error)
+            // console.log(error)
+            toast.error(error)
             setLoading(false)
         }
     }
@@ -79,6 +92,8 @@ function Signup() {
                         onChange={(e) => setPassword(e.target.value)}
                         className=' bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Password'
+                        min={6}
+                        max={9}
                     />
                 </div>
                 <div className=' flex justify-center mb-3'>
